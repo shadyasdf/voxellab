@@ -6,6 +6,7 @@ public static class VLInput
     
     public const string actionLook = "Look";
     public const string actionUISubmit = "UISubmit";
+    public const string actionUICancel = "UICancel";
     public const string actionUIMove = "UIMove";
     public const string actionUILeftClick = "UILeftClick";
     public const string actionUIRightClick = "UIRightClick";

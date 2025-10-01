@@ -9,8 +9,8 @@ using UnityEngine.InputSystem.Utilities;
 public class VLPlayerManager : MonoBehaviour, UIKPlayerManager
 {
     private List<UIKInputDevice> autoJoinInputDevices = new() { UIKInputDevice.MouseAndKeyboard };
-    
-    private List<UIKPlayer> players = new();
+
+    public List<UIKPlayer> players { get; set; } = new();
     private IDisposable anyButtonPressObserver;
     
     public static VLPlayerManager instance { get; private set; }
@@ -22,7 +22,6 @@ public class VLPlayerManager : MonoBehaviour, UIKPlayerManager
         {
             Destroy(gameObject);
         }
-        
         instance = this;
         UIKPlayerManager.instance = this;
         DontDestroyOnLoad(gameObject);
@@ -76,7 +75,7 @@ public class VLPlayerManager : MonoBehaviour, UIKPlayerManager
         // Attempt to instantiate a new player if this input is from a new device, and other conditions are met
         
         // Don't allow joining a new player if we already have one
-        if (GetPlayers().Count > 0)
+        if (players.Count > 0)
         {
             return;
         }
@@ -102,7 +101,7 @@ public class VLPlayerManager : MonoBehaviour, UIKPlayerManager
             || _inputDevices.Contains(Keyboard.current))
         {
             // Make sure there isn't a player using the Mouse or the Keyboard
-            foreach (VLPlayer player in GetPlayers().Cast<VLPlayer>())
+            foreach (VLPlayer player in players.Cast<VLPlayer>())
             {
                 if (player.inputDeviceType.HasFlag(UIKInputDevice.Mouse)
                     || player.inputDeviceType.HasFlag(UIKInputDevice.Keyboard))
@@ -111,19 +110,19 @@ public class VLPlayerManager : MonoBehaviour, UIKPlayerManager
                 }
             }
 
-            SpawnPlayer(-1, -1, null, new InputDevice[2] { Mouse.current, Keyboard.current });
+            JoinPlayer(-1, -1, null, new InputDevice[2] { Mouse.current, Keyboard.current });
         }
         else
         {
-            SpawnPlayer(-1, -1, null, _inputDevices);
+            JoinPlayer(-1, -1, null, _inputDevices);
         }
     }
 
     public bool IsDeviceInUse(InputDevice _inputDevice)
     {
-        foreach (VLPlayer player in GetPlayers().Cast<VLPlayer>())
+        foreach (VLPlayer player in players.Cast<VLPlayer>())
         {
-            if (player.GetInputDevices().Contains(_inputDevice))
+            if (((UIKPlayer)player).GetInputDevices().Contains(_inputDevice))
             {
                 return true;
             }
@@ -141,19 +140,9 @@ public class VLPlayerManager : MonoBehaviour, UIKPlayerManager
     {
         return players.FirstOrDefault() as VLPlayer;
     }
-    
-    public List<UIKPlayer> GetPlayers()
-    {
-        return players;
-    }
 
-    void UIKPlayerManager.OnPlayerSpawned(UIKPlayer _player)
+    public UIKPlayer JoinPlayer(int _playerIndex = -1, int _splitScreenIndex = -1, string _controlScheme = null, InputDevice[] _inputDevices = null)
     {
-        players.Add(_player);
-    }
-
-    public UIKPlayer SpawnPlayer(int _playerIndex = -1, int _splitScreenIndex = -1, string _controlScheme = null, InputDevice[] _inputDevices = null)
-    {
-        return UIKPlayerManager.SpawnPlayer(this, _playerIndex, _splitScreenIndex, _controlScheme, _inputDevices);
+        return UIKPlayerManager.JoinPlayer(this, _playerIndex, _splitScreenIndex, _controlScheme, _inputDevices);
     }
 }

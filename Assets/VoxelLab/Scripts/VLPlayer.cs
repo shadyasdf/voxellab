@@ -8,35 +8,21 @@ using UnityEngine.InputSystem;
 
 public class VLPlayer : MonoBehaviour, UIKPlayer
 {
-    [HideInInspector] public UnityEvent<InputAction> OnInputActionTriggered = new();
+    public UnityEvent<InputAction> OnInputActionTriggered { get; set; } = new();
     
-    [SerializeField] private PlayerInput playerInput;
-    
+    public PlayerInput playerInput { get; set; }
     public UIKSelectable selectedUI { get; set; }
-    public UIKInputDevice inputDeviceType { get; protected set; }
+    public UIKInputDevice inputDeviceType { get; set; }
 
-
-    protected virtual void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-        
-        playerInput.onActionTriggered += PlayerInput_OnActionTriggered;
-        playerInput.onControlsChanged += PlayerInput_OnControlsChanged;
-        
-        PlayerInput_OnControlsChanged(playerInput);
-    }
 
     protected virtual void Start()
     {
         VLCanvas.instance.PushScreen(VLUI.screenName_menu);
     }
 
-    
-    protected virtual void PlayerInput_OnActionTriggered(InputAction.CallbackContext _context)
+
+    public bool OnPreInputActionTriggered(InputAction.CallbackContext _context)
     {
-        // The device used to trigger the action
-        // _context.action.activeControl.device
-        
         // Consume UI inputs before broadcasting them
         switch (_context.action.name)
         {
@@ -48,7 +34,7 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
                 {
                     if (TrySubmitUI(GetSelectedUI()))
                     {
-                        return;
+                        return false;
                     }
                 }
                 break;
@@ -57,7 +43,7 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
                 {
                     if (TryNavigateUIByDirection(_context.ReadValue<Vector2>()))
                     {
-                        return;
+                        return false;
                     }
                 }
                 break;
@@ -82,7 +68,7 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
                         Cursor.lockState = CursorLockMode.Locked;
                         Cursor.visible = false;
 
-                        return;
+                        return false;
                     }
                 }
             }
@@ -103,76 +89,21 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
                     // Send an empty input action for look so anything listening to it, if they are caching incoming values, will cache 0,0
                     OnInputActionTriggered.Invoke(new InputAction(VLInput.actionLook));
 
-                    return;
+                    return false;
                 }
             }
         }
 
-        OnInputActionTriggered.Invoke(_context.action);
+        return true;
     }
-    
-    protected virtual void PlayerInput_OnControlsChanged(PlayerInput _playerInput)
+
+    InputDevice[] UIKPlayer.GetInputDevices()
     {
-        if (_playerInput.devices.Count == 1)
-        {
-            if (_playerInput.devices[0] == null)
-            {
-                Debug.LogError("Player's playerInput device was null");
-                return;
-            }
-
-            inputDeviceType = _playerInput.devices[0].GetInputDeviceType();
-            return;
-        }
-        else if (_playerInput.devices.Count == 2)
-        {
-            bool hasMouse = false;
-            bool hasKeyboard = false;
-
-            foreach (InputDevice inputDevice in _playerInput.devices)
-            {
-                if (inputDevice.GetInputDeviceType() == UIKInputDevice.Mouse)
-                {
-                    hasMouse = true;
-                    continue;
-                }
-
-                if (inputDevice.GetInputDeviceType() == UIKInputDevice.Keyboard)
-                {
-                    hasKeyboard = true;
-                    continue;
-                }
-            }
-
-            if (hasKeyboard && hasMouse)
-            {
-                inputDeviceType = UIKInputDevice.MouseAndKeyboard;
-                return;
-            }
-
-            Debug.LogError("Failed to find valid InputDeviceType for given set of 2 devices");
-            return;
-        }
-        else
-        {
-            Debug.LogError("Failed to find valid playerInput device");
-            return;
-        }
+        return UIKPlayer.GetInputDevices(this);
     }
 
-    public InputDevice[] GetInputDevices()
-    {
-        return playerInput.devices.ToArray();
-    }
-    
-    
     void UIKPlayer.OnSelectedUIChanged(UIKSelectable _oldSelectable, UIKSelectable _newSelectable)
     {
-    }
-
-    public UIKInputDevice GetInputDeviceType()
-    {
-        return inputDeviceType;
     }
 
     public UIKSelectable GetSelectedUI()

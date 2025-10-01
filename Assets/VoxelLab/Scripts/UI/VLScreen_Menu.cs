@@ -6,6 +6,13 @@ public class VLScreen_Menu : VLScreen
 {
     public void OnClicked_New()
     {
-        Debug.LogError("New");
+        VLCanvas.instance.PushScreen(VLUI.screenName_hud);
+        CloseScreen();
+    }
+
+
+    public override void HandleBackAction()
+    {
+        VLCanvas.instance.PushScreen(VLUI.screenName_pause);
     }
 }
