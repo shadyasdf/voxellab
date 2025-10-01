@@ -180,14 +180,14 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
         return selectedUI;
     }
 
-    public bool TrySelectUI(UIKSelectable _selectable)
+    public bool TrySelectUI(UIKSelectable _selectable, bool _force = false, bool _executeUIEvent = true)
     {
-        return UIKPlayer.TrySelectUI(this, _selectable);
+        return UIKPlayer.TrySelectUI(this, _selectable, _force, _executeUIEvent);
     }
 
-    public bool TryDeselectUI()
+    public bool TryDeselectUI(bool _force = false, bool _executeUIEvent = true)
     {
-        return UIKPlayer.TryDeselectUI(this);
+        return UIKPlayer.TryDeselectUI(this, _force, _executeUIEvent);
     }
 
     public bool TryNavigateUIByDirection(Vector2 _direction)
@@ -200,8 +200,8 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
         return UIKPlayer.TryNavigateUIByDirection(this, _direction);
     }
 
-    public bool TrySubmitUI(UIKSelectable _selectable)
+    public bool TrySubmitUI(UIKSelectable _selectable, bool _force = false, bool _executeUIEvent = true)
     {
-        return UIKPlayer.TrySubmitUI(this, _selectable);
+        return UIKPlayer.TrySubmitUI(this, _selectable, _force, _executeUIEvent);
     }
 }

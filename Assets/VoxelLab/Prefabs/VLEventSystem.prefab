@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3171413597700963201}
-  - component: {fileID: 5609278740717540487}
   - component: {fileID: 1645937013721114774}
   - component: {fileID: 7021342479604740833}
   m_Layer: 0
@@ -34,21 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5609278740717540487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3236929119547973114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
 --- !u!114 &1645937013721114774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,5 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea86061aed5e0cc46bb43b283cfd64a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSystem: {fileID: 5609278740717540487}
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
   inputModule: {fileID: 1645937013721114774}
