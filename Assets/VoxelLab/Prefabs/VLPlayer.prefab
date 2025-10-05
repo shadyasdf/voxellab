@@ -45,10 +45,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78236ae8eccb1af4799726e7b5a718e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnInputActionTriggered:
-    m_PersistentCalls:
-      m_Calls: []
-  playerInput: {fileID: 8546834876368051068}
+  leftClickInputAction:
+    asset: DefaultControls
+    actionMap: Default
+    action: UILeftClick
+  rightClickInputAction:
+    asset: DefaultControls
+    actionMap: Default
+    action: UIRightClick
+  submitInputAction:
+    asset: DefaultControls
+    actionMap: Default
+    action: UISubmit
+  lookInputAction:
+    asset: DefaultControls
+    actionMap: Default
+    action: Look
+  moveInputAction:
+    asset: DefaultControls
+    actionMap: Default
+    action: UIMove
 --- !u!114 &8546834876368051068
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -135,9 +135,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowAsFirstSelection: 0
-  OnClick:
+  OnClicked:
     m_PersistentCalls:
       m_Calls: []
+  OnSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeselected:
+    m_PersistentCalls:
+      m_Calls: []
+  action:
+    name: Invalid
   text: {fileID: 5526526320633358392}
   buttonText: Button_CTA
 --- !u!1 &7962453222441921210

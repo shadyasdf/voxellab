@@ -162,7 +162,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c315de46430b1814085ad708b1a6f538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handlesBackAction: 1
+  backInputAction:
+    asset: DefaultControls
+    actionMap: Default
+    action: UICancel
 --- !u!1001 &5430285571968059935
 PrefabInstance:
   m_ObjectHideFlags: 0

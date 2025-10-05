@@ -9,6 +9,12 @@ using UnityEngine.InputSystem;
 public class VLPlayer : MonoBehaviour, UIKPlayer
 {
     public UnityEvent<InputAction> OnInputActionTriggered { get; set; } = new();
+
+    [SerializeField] protected UIKInputAction leftClickInputAction;
+    [SerializeField] protected UIKInputAction rightClickInputAction;
+    [SerializeField] protected UIKInputAction submitInputAction;
+    [SerializeField] protected UIKInputAction lookInputAction;
+    [SerializeField] protected UIKInputAction moveInputAction;
     
     public PlayerInput playerInput { get; set; }
     public UIKSelectable selectedUI { get; set; }
@@ -23,39 +29,39 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
 
     public bool OnPreInputActionTriggered(InputAction.CallbackContext _context)
     {
+        
+        
         // Consume UI inputs before broadcasting them
-        switch (_context.action.name)
+        if (_context.action == leftClickInputAction
+            || _context.action == submitInputAction)
         {
-            case VLInput.actionUILeftClick:
-                goto case VLInput.actionUISubmit;
-            case VLInput.actionUISubmit:
-                if (_context.action.WasPressedThisFrame()
-                    && _context.action.triggered)
+            if (_context.action.WasPressedThisFrame()
+                && _context.action.triggered)
+            {
+                if (TrySubmitUI(GetSelectedUI()))
                 {
-                    if (TrySubmitUI(GetSelectedUI()))
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-                break;
-            case VLInput.actionUIMove:
-                if (_context.action.WasPerformedThisFrame())
-                {
-                    if (TryNavigateUIByDirection(_context.ReadValue<Vector2>()))
-                    {
-                        return false;
-                    }
-                }
-                break;
+            }
         }
-
+        else if (_context.action == moveInputAction)
+        {
+            if (_context.action.WasPerformedThisFrame())
+            {
+                if (TryNavigateUIByDirection(_context.ReadValue<Vector2>()))
+                {
+                    return false;
+                }
+            }
+        }
+        
         // Handle cursor locking
         if (Cursor.lockState != CursorLockMode.Locked)
         {
             // If we're using a mouse device, and we're right-clicking, attempt to lock the cursor to the game
             if (_context.GetInputDeviceType().UsesCursor())
             {
-                if (_context.action.name == VLInput.actionUIRightClick
+                if (_context.action == rightClickInputAction
                     && _context.action.WasPressedThisFrame()
                     && UIKEventSystem.instance != null)
                 {
@@ -79,15 +85,15 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
         {
             if (_context.GetInputDeviceType().UsesCursor())
             {
-                if (_context.action.name == VLInput.actionUIRightClick
+                if (_context.action == rightClickInputAction
                     &&  _context.action.WasReleasedThisFrame()
                     && UIKEventSystem.instance != null)
                 {
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
-                    
+
                     // Send an empty input action for look so anything listening to it, if they are caching incoming values, will cache 0,0
-                    OnInputActionTriggered.Invoke(new InputAction(VLInput.actionLook));
+                    OnInputActionTriggered.Invoke(new InputAction());
 
                     return false;
                 }
