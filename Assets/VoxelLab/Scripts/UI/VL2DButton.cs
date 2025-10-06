@@ -26,10 +26,4 @@ public class VL2DButton : UIK2DButton
             text.SetText(buttonText);
         }
     }
-
-
-    public void TestClick()
-    {
-        Debug.Log("TestClick");
-    }
 }

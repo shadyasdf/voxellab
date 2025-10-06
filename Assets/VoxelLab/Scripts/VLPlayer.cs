@@ -27,10 +27,13 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
     }
 
 
+    public bool GetIsLocal()
+    {
+        return true; // We know there is only one local player
+    }
+
     public bool OnPreInputActionTriggered(InputAction.CallbackContext _context)
     {
-        
-        
         // Consume UI inputs before broadcasting them
         if (_context.action == leftClickInputAction
             || _context.action == submitInputAction)
