@@ -1,3 +1,4 @@
+using System.Reflection;
 using TMPro;
 using UIKit;
 using UnityEngine;
@@ -23,7 +24,17 @@ public class VL2DButton : UIK2DButton
         
         if (text != null)
         {
-            text.SetText(buttonText);
+            if (clickActionObject != null
+                && clickActionObject.GetActionObject() is UIKActionObject actionObject
+                && actionObject.GetType().GetCustomAttribute<UIKActionObjectAttribute>() is UIKActionObjectAttribute attribute
+                && !string.IsNullOrEmpty(attribute.actionText))
+            {
+                text.SetText(attribute.actionText);
+            }
+            else
+            {
+                text.SetText(buttonText);
+            }
         }
     }
 }

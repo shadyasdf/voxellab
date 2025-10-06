@@ -1,6 +1,8 @@
 using System.Linq;
+using UIKit;
 using UnityEngine;
 
+[UIKActionObject(actionText = "Close")]
 public class VLActionObject_CloseActiveScreen : VLActionObject
 {
     protected VLScreen screen;

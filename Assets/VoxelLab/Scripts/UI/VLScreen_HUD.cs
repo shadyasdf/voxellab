@@ -4,14 +4,14 @@ using UnityEngine;
 [UIKScreen(name = VLUI.screenName_hud, layer = VLUI.screenLayer_hud)]
 public class VLScreen_HUD : VLScreen
 {
-    public void OnClicked_Tool1()
+    public void OnSelected_Tool1(UIKEventData _eventData)
     {
-        Debug.Log("OnClicked Tool 1");
+        UIKActionObjectReflector.ReceiveContext<VLActionObject_SelectTool>(1);
     }
     
-    public void OnClicked_Tool2()
+    public void OnSelected_Tool2(UIKEventData _eventData)
     {
-        Debug.Log("OnClicked Tool 2");
+        UIKActionObjectReflector.ReceiveContext<VLActionObject_SelectTool>(2);
     }
     
     
