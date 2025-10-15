@@ -1,3 +1,4 @@
+using SFB;
 using UIKit;
 using UnityEngine;
 
@@ -16,12 +17,48 @@ public class VLScreen_HUD : VLScreen
 
     public void OnClicked_Load()
     {
-        Debug.Log("Load");
+        StandaloneFileBrowser.OpenFilePanelAsync($"Load {VLProject.projectFriendlyName}",
+            VLProject.defaultProjectDirectory,
+            VLProject.fileExtensionFilters,
+            false, 
+            (string[] paths) =>
+            {
+                if (paths.Length > 0
+                    && !string.IsNullOrEmpty(paths[0])
+                    && paths[0] is string path
+                    && VLProject.instance
+                    && VLProject.instance.TryLoadProjectFromFile(path))
+                {
+                    Debug.Log("Load complete");
+                    
+                    return;
+                }
+                
+                // Error
+                Debug.Log("Error loading");
+            });
     }
     
     public void OnClicked_Save()
     {
-        Debug.Log("Save");
+        StandaloneFileBrowser.SaveFilePanelAsync($"Save {VLProject.projectFriendlyName}",
+            VLProject.defaultProjectDirectory,
+            VLProject.instance.projectName,
+            VLProject.fileExtensionFilters,
+            (string path) =>
+            {
+                if (!string.IsNullOrEmpty(path)
+                    && VLProject.instance
+                    && VLProject.instance.TrySaveProjectToFile(path))
+                {
+                    Debug.Log("Save complete");
+                    
+                    return;
+                }
+                
+                // Error
+                Debug.Log("Error saving");
+            });
     }
     
     
