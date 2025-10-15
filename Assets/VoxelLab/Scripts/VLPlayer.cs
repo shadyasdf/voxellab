@@ -17,7 +17,7 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
     [SerializeField] protected UIKInputAction moveInputAction;
     
     public PlayerInput playerInput { get; set; }
-    public UIKSelectable selectedUI { get; set; }
+    public UIKTarget targetUI { get; set; }
     public UIKInputDevice inputDeviceType { get; set; }
 
 
@@ -41,7 +41,7 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
             if (_context.action.WasPressedThisFrame()
                 && _context.action.triggered)
             {
-                if (TrySubmitUI(GetSelectedUI()))
+                if (TrySubmitUI(GetTargetUI()))
                 {
                     return false;
                 }
@@ -111,23 +111,23 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
         return UIKPlayer.GetInputDevices(this);
     }
 
-    void UIKPlayer.OnSelectedUIChanged(UIKSelectable _oldSelectable, UIKSelectable _newSelectable)
+    void UIKPlayer.OnTargetUIChanged(UIKTarget _oldTarget, UIKTarget _newTarget)
     {
     }
 
-    public UIKSelectable GetSelectedUI()
+    public UIKTarget GetTargetUI()
     {
-        return selectedUI;
+        return targetUI;
     }
 
-    public bool TrySelectUI(UIKSelectable _selectable, bool _force = false, bool _executeUIEvent = true)
+    public bool SelectUI(UIKTarget _target)
     {
-        return UIKPlayer.TrySelectUI(this, _selectable, _force, _executeUIEvent);
+        return UIKPlayer.SelectUI(this, _target);
     }
 
-    public bool TryDeselectUI(bool _force = false, bool _executeUIEvent = true)
+    public bool DeselectUI()
     {
-        return UIKPlayer.TryDeselectUI(this, _force, _executeUIEvent);
+        return UIKPlayer.DeselectUI(this);
     }
 
     public bool TryNavigateUIByDirection(Vector2 _direction)
@@ -140,8 +140,18 @@ public class VLPlayer : MonoBehaviour, UIKPlayer
         return UIKPlayer.TryNavigateUIByDirection(this, _direction);
     }
 
-    public bool TrySubmitUI(UIKSelectable _selectable, bool _force = false, bool _executeUIEvent = true)
+    public bool TryTargetUI(UIKTarget _target)
     {
-        return UIKPlayer.TrySubmitUI(this, _selectable, _force, _executeUIEvent);
+        return UIKPlayer.TryTargetUI(this, _target);
+    }
+
+    public bool TryUntargetUI(UIKTarget _target = null)
+    {
+        return UIKPlayer.TryUntargetUI(this, _target);
+    }
+
+    public bool TrySubmitUI(UIKTarget _target)
+    {
+        return UIKPlayer.TrySubmitUI(this, _target);
     }
 }

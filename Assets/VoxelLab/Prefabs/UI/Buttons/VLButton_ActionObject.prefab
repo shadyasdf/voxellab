@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3972422850471024955}
   - component: {fileID: 7711412628180681197}
   - component: {fileID: 6911785013568846443}
+  - component: {fileID: 2135195942052592678}
   m_Layer: 5
   m_Name: VLButton_ActionObject
   m_TagString: Untagged
@@ -41,7 +42,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2493304434041619191
 CanvasRenderer:
@@ -100,7 +101,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0, g: 1, b: 1, a: 1}
@@ -137,14 +138,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400d2a094a7072745a1b9e4a0358badc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowAsFirstSelection: 0
+  OnTargeted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUntargeted:
+    m_PersistentCalls:
+      m_Calls: []
+  allowAsFirstTarget: 0
   OnClicked:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSelected:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeselected:
     m_PersistentCalls:
       m_Calls: []
   clickActionObject:
@@ -195,6 +196,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2135195942052592678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2499133590474645267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5defc760050934ab6b755a90689154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transition: 1
+  transitionGraphic: {fileID: 4755596215494790520}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  targetedColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &3259473461933422779
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,6 +521,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15c73c44ce1e0bf468fc62393f0583a7, type: 3}
+--- !u!114 &4755596215494790520 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3033784909416694274, guid: 15c73c44ce1e0bf468fc62393f0583a7, type: 3}
+  m_PrefabInstance: {fileID: 7774742115077803898}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8731975289384453149 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1354276718709607271, guid: 15c73c44ce1e0bf468fc62393f0583a7, type: 3}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2319020206451058243}
   - component: {fileID: 3782299700336008017}
   - component: {fileID: 3830772741948119478}
+  - component: {fileID: 4657993044139379879}
   m_Layer: 5
   m_Name: VLButton_Tool
   m_TagString: Untagged
@@ -98,7 +99,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0, g: 1, b: 1, a: 1}
@@ -135,14 +136,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400d2a094a7072745a1b9e4a0358badc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowAsFirstSelection: 0
+  OnTargeted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUntargeted:
+    m_PersistentCalls:
+      m_Calls: []
+  allowAsFirstTarget: 0
   OnClicked:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSelected:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeselected:
     m_PersistentCalls:
       m_Calls: []
   clickActionObject:
@@ -153,6 +154,22 @@ MonoBehaviour:
     action: 
   text: {fileID: 936960647769488052}
   buttonText: Tool
+--- !u!114 &4657993044139379879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2353120670832238494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5defc760050934ab6b755a90689154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transition: 1
+  transitionGraphic: {fileID: 2319020206451058243}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  targetedColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &3400987179465570358
 GameObject:
   m_ObjectHideFlags: 0
