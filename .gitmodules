@@ -1,3 +1,6 @@
 [submodule "Assets/UIKit"]
 	path = Assets/UIKit
 	url = https://github.com/shadyasdf/uikit
+[submodule "Assets/UnityStandaloneFileBrowser"]
+	path = Assets/UnityStandaloneFileBrowser
+	url = https://github.com/shadyasdf/UnityStandaloneFileBrowser
