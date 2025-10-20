@@ -4,3 +4,6 @@
 [submodule "Assets/UnityStandaloneFileBrowser"]
 	path = Assets/UnityStandaloneFileBrowser
 	url = https://github.com/shadyasdf/UnityStandaloneFileBrowser
+[submodule "Assets/VoxelMesh"]
+	path = Assets/VoxelMesh
+	url = https://github.com/shadyasdf/voxelmesh
