@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using SFB;
+using Unity.Mathematics;
 using UnityEngine;
+using VoxelMesh;
 
 public class VLProject : MonoBehaviour
 {
@@ -38,6 +41,11 @@ public class VLProject : MonoBehaviour
 
         string content = File.ReadAllText(_path);
         Debug.Log($"Loaded project!\n{_path}\n{content}");
+
+        VMObject<VMVoxelInfo_Color> obj = VMDataReader.ReadObject_Color(_path);
+        
+        VMObjectRenderer objectRenderer = new GameObject("ObjectRenderer").AddComponent<VMObjectRenderer>();
+        objectRenderer.SetVoxelObject(obj);
         
         return true;
     }
@@ -49,9 +57,28 @@ public class VLProject : MonoBehaviour
             return false;
         }
 
-        string content = "Testing contents";
-        File.WriteAllText(_path, content);
-        Debug.Log($"Saved project!\n{_path}\n{content}");
+        Dictionary<ushort, VMVoxelInfo_Color> infoByPalette = new()
+        {
+            { 1, new VMVoxelInfo_Color(Color.red) },
+            { 2, new VMVoxelInfo_Color(Color.blue) }
+        };
+        Dictionary<int3, ushort> paletteByPosition = new()
+        {
+            { new int3(0, 0, 0), 1 },
+            { new int3(0, 1, 0), 2 }
+        };
+        VMData<VMVoxelInfo_Color> data = new(infoByPalette, paletteByPosition);
+        VMChunk<VMVoxelInfo_Color> chunk1 = new(data);
+        VMChunk<VMVoxelInfo_Color> chunk2 = new(data);
+        VMObject<VMVoxelInfo_Color> obj = new(new Dictionary<VMChunk<VMVoxelInfo_Color>, VMChunkProperties>()
+        {
+            { chunk1, new VMChunkProperties(int3.zero, int3.zero) },
+            { chunk2, new VMChunkProperties(new int3(1, 0, 0), int3.zero) }
+        });
+        
+        VMDataWriter.WriteObject_Color(_path, obj);
+        
+        Debug.Log($"Saved project!\n{_path}");
         
         return true;
     }
